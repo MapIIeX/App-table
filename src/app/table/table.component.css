@@ -1,0 +1,91 @@
+table {
+    text-align: left;
+    border: 1px solid #cccccc;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #cccccc;
+}
+th {
+    padding: 2px 5px;
+    line-height: 2.1;
+}
+td {
+    padding: 0;
+}
+
+.edit, .delete, .save, .cancel {
+    border: none;
+    padding-right: 6px;
+    text-decoration: underline;
+    color: rgb(31, 31, 255);
+    cursor: pointer;
+}
+.tools {
+    text-align: center;
+    padding: 2px 6px;
+
+}
+.wrapper {
+    width: 110px;
+}
+.delete {
+    padding-right: 0px;
+}
+.sorting {
+    cursor: pointer;
+}
+input {
+    border: none;
+    line-height: 2.5;
+    padding: 2px 6px;
+
+}
+
+input:focus {
+    outline: 1px solid rgb(0, 162, 255);
+}
+button {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    background-color: white;
+    cursor: pointer;
+    align-items: center;
+    color: #222222;
+    font-size: 30px;
+    margin: 0 0 10px;
+    line-height: 1.1;
+    float: left;
+}
+button:hover {
+    background-color: #f0f0f0;
+}
+button:active {
+    background-color: #bbbbbb;
+    border: 1px solid #cccccc;
+}
+button:focus {
+    outline: none;
+    box-shadow: #cccccc 1px;
+}
+button:disabled {
+    color: gray;
+    background-color: #e6e6e6;
+    cursor: auto;
+}
+input:disabled {
+    display: inline;
+    background-color: white;
+    border-bottom: none;
+    border-top: none;
+}
+
+.notes:focus {
+    text-overflow: ellipsis;
+}
+.id {
+    max-width: 50px;
+}

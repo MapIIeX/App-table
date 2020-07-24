@@ -1,0 +1,60 @@
+<button type="button" (click)="pushArray(employees)" [disabled]="disableButton(employees)" (click)='testChecker($event)'>+</button>
+<table id="table">
+    <tr>
+        <th>ID</th>
+        <th class="sorting" (click)="sortFirstNames()">FirstName</th>
+        <th >LastName</th>
+        <th>BirthDate</th>
+        <th>Notes</th>
+        <th>Address</th>
+        <th class="tools"></th>
+    </tr>
+    <tr *ngFor='let employee of employees'>
+        <td><input type="text" class="id"
+            [value]="employee.ID" 
+            [disabled]="!employee.isEditing"
+            autofocus
+            (click)="testChecker($event)"
+            ></td>
+        <td><input type="text" 
+            [value]="employee.FirstName" 
+            [disabled]="!employee.isEditing"
+            ></td>
+        <td><input type="text" 
+            [value]="employee.LastName" 
+            [disabled]="!employee.isEditing"
+            ></td>
+        <td><input type="date" 
+            value="2000-01-01"
+            [disabled]="!employee.isEditing"
+            ></td>
+        <td><input class="notes" type="text" 
+            [value]="employee.Notes" 
+            [disabled]="!employee.isEditing"
+            ></td>
+        <td><input type="text" 
+            [value]="employee.Address" 
+            [disabled]="!employee.isEditing"
+            ></td>
+        <td class="tools">
+            <div class="wrapper">
+                <span class="edit" 
+                    *ngIf="!employee.isEditing"
+                    (click)="editMode(employee)"
+                >Edit</span>
+                <span class="delete" 
+                    *ngIf="!employee.isEditing"
+                    (click)="deleteTableLine(employee)" 
+                >Delete</span>
+                <span class="save" 
+                    *ngIf="employee.isEditing"
+                    (click)="editMode(employee)"
+                >Save</span>
+                <span class="cancel"  
+                    *ngIf="employee.isEditing"
+                >Cancel</span>
+            </div>
+        </td>
+    </tr>
+    
+</table>
