@@ -1,8 +1,9 @@
-<button type="button" (click)="pushArray(employees)" [disabled]="disableButton(employees)" (click)='testChecker($event)'>+</button>
+<button type="button" (click)="pushArray(employees)" [disabled]="disableButton(employees)" >+</button>
 <table id="table">
     <tr>
         <th>ID</th>
-        <th class="sorting" (click)="sortFirstNames()">FirstName</th>
+        <th class="sorting1" (click)="sortFirstNamesStraight()" *ngIf="!employees.sortingStatus">FirstName</th>
+        <th class="sorting2" (click)="sortFirstNamesReverse()" *ngIf="employees.sortingStatus">FirstName</th>
         <th >LastName</th>
         <th>BirthDate</th>
         <th>Notes</th>
@@ -11,29 +12,29 @@
     </tr>
     <tr *ngFor='let employee of employees'>
         <td><input type="text" class="id"
-            [value]="employee.ID" 
+            [(value)]="employee.ID" 
             [disabled]="!employee.isEditing"
-            autofocus
             (click)="testChecker($event)"
             ></td>
         <td><input type="text" 
-            [value]="employee.FirstName" 
+            [(value)]="employee.FirstName" 
             [disabled]="!employee.isEditing"
+            autofocus
             ></td>
         <td><input type="text" 
-            [value]="employee.LastName" 
+            [(value)]="employee.LastName" 
             [disabled]="!employee.isEditing"
             ></td>
         <td><input type="date" 
-            value="2000-01-01"
+            [(value)]="employee.BirthDate | date: 'yyyy-MM-dd'"
             [disabled]="!employee.isEditing"
             ></td>
         <td><input class="notes" type="text" 
-            [value]="employee.Notes" 
+            [(value)]="employee.Notes" 
             [disabled]="!employee.isEditing"
             ></td>
         <td><input type="text" 
-            [value]="employee.Address" 
+            [(value)]="employee.Address" 
             [disabled]="!employee.isEditing"
             ></td>
         <td class="tools">

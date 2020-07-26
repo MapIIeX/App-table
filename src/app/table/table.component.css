@@ -33,8 +33,14 @@ td {
 .delete {
     padding-right: 0px;
 }
-.sorting {
+.sorting1, .sorting2 {
     cursor: pointer;
+}
+.sorting1::after {
+    content: '\&downarrow';
+    height: 20px;
+    width: 20px;
+    background-color: gray;
 }
 input {
     border: none;
