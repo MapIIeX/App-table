@@ -1,79 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployessDataService } from './employeesDataService';
+import { EmployeesDataService } from './employeesDataService';
+import { analyzeAndValidateNgModules, MethodCall } from '@angular/compiler';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
+
 export class TableComponent implements OnInit {
 
     constructor() {
-        this.employees = new EmployessDataService().employees
-    }
-    employees: any = []
-    ngOnInit(): void {
-    }
-
-    getId(object: any) {
-        console.log(object.ID)
-    }
-    moveArrayToLocalStorage(array){
 
     }
-    autoFocus = true;
-    pushArray(array: any) {
-        let id = array.length + 1
-        array.push({
-            "ID": id,
-            "FirstName": '',
-            "LastName": '',
-            "BirthDate": new Date(),
-            "Notes": '',
-            "Address": '',
-            "isEditing": true
-        })
-    }
-    sortFirstNamesStraight() {
-        this.employees.sort((a: any, b: any) => {
-            let firstNameA = a.FirstName.toLowerCase(), firstNameB = b.FirstName.toLowerCase();
-            if (firstNameA < firstNameB) {
-                return -1
-            }
-            if (firstNameA < firstNameB) {
-                return 1
-            }
-            return 0
-        });
-        this.employees.sortingStatus = !this.employees.sortingStatus
-    }
-    sortFirstNamesReverse(){
-        this.employees.reverse()
-        this.employees.sortingStatus = !this.employees.sortingStatus
-    }
-    editMode(object: any) {
-        object.isEditing = !object.isEditing
+    
+    employees: any = new EmployeesDataService().employees                                       
+    employeesFromLocalStorage: any = []
+
+    ngOnInit() {
+        for(let item in localStorage){                                                          // При первоначальной загрузке
+            let fromLS = localStorage.getItem(item)                                             // вытягиваем
+            this.employeesFromLocalStorage.push(JSON.parse(fromLS))                             // с локал стореджа
+        }                                                                                       // 
+
+        this.employeesFromLocalStorage.splice(this.employeesFromLocalStorage.length - 6, 6)     // лишние свойста localStorage(getItem, length и т.д.)
+
+        this.employeesFromLocalStorage.sort(function(a, b){                                     // Сортировке по номеру
+            return a.ID - b.ID                                                                  // ID 
+        })                                                                                      // при первоначальной загрузке
     }
 
-    disableButton(array: any) {
-        for(let element of array) {
-            if(element.isEditing == true){
-                return true
-            } 
-        }
-        return false
+    notMockDataToLS(){                                                                          // Залив данных в 
+        for(let employee of this.employees) {                                                   // localStorage
+            let employeeJSON = JSON.stringify(employee);                                        // (это
+            localStorage.setItem(employee.ID, employeeJSON)                                     //  тестовые данные
+        }                                                                                       //  т.е. не настоящие)
     }
-    currentDataArray: Array<any> = [];
-    dataForCancelButton(object: any) {
-        this.currentDataArray.push(object);
-    }
-    deleteTableLine(object: any){
-        this.employees.splice(this.employees.indexOf(object),1)
-    }
-    testChecker(event){
-        console.log(event);
-    }
+    
+    edit = new EmployeesDataService().change                                                    //
+    save = new EmployeesDataService().confirm                                                   //
+    delete = new EmployeesDataService().remove                                                  //
+    create = new EmployeesDataService().create                                                  //  
+    cancelDelete = new EmployeesDataService().cancelDelete                                      // Методы  
+    cancelRestore = new EmployeesDataService().cancelRestore                                    //
+    disableButton = new EmployeesDataService().disableButton                                    //
+    sortFirstNamesStraight = new EmployeesDataService().sortFirstNamesStraight                  //
+    sortFirstNamesReverse = new EmployeesDataService().sortFirstNamesReverse                    //
 }
+
+
 
 
 

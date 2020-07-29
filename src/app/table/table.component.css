@@ -2,6 +2,14 @@ table {
     text-align: left;
     border: 1px solid #cccccc;
     border-collapse: collapse;
+    position: relative;
+}
+.test-data {
+    width: fit-content;
+    margin-left: 20px;
+    position: absolute;
+    right: auto;
+    font-size: 15px;
 }
 
 td, th {
@@ -15,7 +23,7 @@ td {
     padding: 0;
 }
 
-.edit, .delete, .save, .cancel {
+.edit, .delete, .save, .cancel-restore, .cancel-remove {
     border: none;
     padding-right: 6px;
     text-decoration: underline;
@@ -36,11 +44,20 @@ td {
 .sorting1, .sorting2 {
     cursor: pointer;
 }
+.headline {
+    position: relative;
+}
 .sorting1::after {
-    content: '\&downarrow';
-    height: 20px;
-    width: 20px;
-    background-color: gray;
+    position: absolute;
+    content: '↑';
+    font-size: 16px;
+    padding-left: 80px;
+}
+.sorting2::after {
+    position: absolute;
+    content: '↓';
+    font-size: 16px;
+    padding-left: 80px;
 }
 input {
     border: none;
@@ -94,4 +111,27 @@ input:disabled {
 }
 .id {
     max-width: 50px;
+}
+.empty {
+    width: 1068px;
+}
+.last-child-hidden {
+    width: 112px;
+}
+.message {
+    height: 200px;
+    text-align: center;
+    padding-top: 170px;
+    font-weight: bolder;
+    font-size: 36px;
+    color: rgb(153, 153, 153);
+}
+.birth-date-hidden {
+    width: 142px;
+}
+.id-hidden {
+    width: 52px;
+}
+.th-hidden {
+    width: 171px;
 }

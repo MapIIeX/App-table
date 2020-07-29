@@ -1,61 +1,84 @@
-<button type="button" (click)="pushArray(employees)" [disabled]="disableButton(employees)" >+</button>
-<table id="table">
-    <tr>
+<button type="button"  [disabled]="disableButton(employeesFromLocalStorage)" (click)="create(employeesFromLocalStorage)">+</button>
+<button type="button" class="test-data" (click)="notMockDataToLS()">Give not mock data to LS</button>
+<table id="table" *ngIf="employeesFromLocalStorage.length !== 0; else noData">
+    <tr class="headline">
         <th>ID</th>
-        <th class="sorting1" (click)="sortFirstNamesStraight()" *ngIf="!employees.sortingStatus">FirstName</th>
-        <th class="sorting2" (click)="sortFirstNamesReverse()" *ngIf="employees.sortingStatus">FirstName</th>
+        <th class="sorting1" (click)="sortFirstNamesStraight(employeesFromLocalStorage)" *ngIf="!employeesFromLocalStorage.sortingStatus" >FirstName</th>
+        <th class="sorting2" (click)="sortFirstNamesReverse(employeesFromLocalStorage)" *ngIf="employeesFromLocalStorage.sortingStatus">FirstName</th>
         <th >LastName</th>
         <th>BirthDate</th>
         <th>Notes</th>
         <th>Address</th>
         <th class="tools"></th>
     </tr>
-    <tr *ngFor='let employee of employees'>
+    <tr *ngFor='let employee of employeesFromLocalStorage'>
         <td><input type="text" class="id"
-            [(value)]="employee.ID" 
-            [disabled]="!employee.isEditing"
-            (click)="testChecker($event)"
+            [(ngModel)]="employee.ID"
+            [disabled]="true"
             ></td>
         <td><input type="text" 
-            [(value)]="employee.FirstName" 
+            [(ngModel)]="employee.FirstName"
             [disabled]="!employee.isEditing"
             autofocus
             ></td>
         <td><input type="text" 
-            [(value)]="employee.LastName" 
+            [(ngModel)]="employee.LastName"
             [disabled]="!employee.isEditing"
             ></td>
         <td><input type="date" 
-            [(value)]="employee.BirthDate | date: 'yyyy-MM-dd'"
+            [value]="employee.BirthDate | date: 'yyyy-MM-dd'"
+            (input)="employee.BirthDate = $event.target.value"
             [disabled]="!employee.isEditing"
             ></td>
         <td><input class="notes" type="text" 
-            [(value)]="employee.Notes" 
+            [(ngModel)]="employee.Notes"
             [disabled]="!employee.isEditing"
             ></td>
         <td><input type="text" 
-            [(value)]="employee.Address" 
+            [(ngModel)]="employee.Address"
             [disabled]="!employee.isEditing"
             ></td>
         <td class="tools">
             <div class="wrapper">
                 <span class="edit" 
                     *ngIf="!employee.isEditing"
-                    (click)="editMode(employee)"
+                    (click)="edit(employee)"
                 >Edit</span>
                 <span class="delete" 
                     *ngIf="!employee.isEditing"
-                    (click)="deleteTableLine(employee)" 
+                    (click)="delete(employee, employeesFromLocalStorage)"
                 >Delete</span>
                 <span class="save" 
                     *ngIf="employee.isEditing"
-                    (click)="editMode(employee)"
+                    (click)="save(employee, employeesFromLocalStorage)"
                 >Save</span>
-                <span class="cancel"  
-                    *ngIf="employee.isEditing"
+                <span class="cancel-remove"  
+                    *ngIf="employee.isEditing && employee.cancelRemove"
+                    (click)="cancelDelete(employee, employeesFromLocalStorage)"
+                >Cancel</span>
+                <span class="cancel-restore"  
+                    *ngIf="employee.isEditing && !employee.cancelRemove"
+                    (click)="cancelRestore(employee)"
                 >Cancel</span>
             </div>
         </td>
     </tr>
-    
 </table>
+<ng-template #noData>
+    <table class="empty">
+        <tr class="headline">
+            <th class="id-hidden">ID</th>
+            <th class="th-hidden">FirstName</th>
+            <th class="th-hidden">LastName</th>
+            <th class="birth-date-hidden">BirthDate</th>
+            <th class="th-hidden">Notes</th>
+            <th class="th-hidden">Address</th>
+            <th class="last-child-hidden"></th>
+        </tr>
+        <tr>
+            <td colspan="7">
+            <div class="message">There is no one employee data</div>
+            </td>
+        </tr>
+    </table>
+</ng-template>
